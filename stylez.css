@@ -142,6 +142,10 @@ nav {
     margin: 0;
 }
 
+.nav-links li:last-child {
+    margin-right: 20px; 
+}
+
 /* Light Theme Navigation Links */
 body.light-mode .nav-links a {
     color: var(--nav-text-color);
@@ -620,6 +624,23 @@ main {
     .media-viewer {
         padding: var(--spacing-small);
         background-color: var(--secondary-bg-color);
+    }
+}
+
+/* Ensure the icons are visible and positioned correctly for larger screens */
+@media (min-width: 768px) {
+    .nav-links li {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-links li a {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-links li a i {
+        margin-right: 8px;
     }
 }
 

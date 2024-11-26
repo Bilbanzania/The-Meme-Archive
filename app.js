@@ -1,22 +1,24 @@
-// Debounce function to limit the rate at which a function can fire
-function debounce(func, wait) {
+// Debounce function with leading option
+function debounce(func, wait, immediate) {
     let timeout;
     return function () {
+        const context = this, args = arguments;
+        const later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        const callNow = immediate && !timeout;
         clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, arguments), wait);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
     };
 }
 
 // Toggle playlist visibility
 document.getElementById('toggle-playlist').addEventListener('click', function () {
     const playlistContent = document.getElementById('playlist-content');
-    if (playlistContent.classList.contains('hidden')) {
-        playlistContent.classList.remove('hidden');
-        this.textContent = 'Hide Playlist';
-    } else {
-        playlistContent.classList.add('hidden');
-        this.textContent = 'View Playlist';
-    }
+    playlistContent.classList.toggle('hidden');
+    this.textContent = playlistContent.classList.contains('hidden') ? 'View Playlist' : 'Hide Playlist';
 });
 
 // Toggle navigation menu
@@ -24,69 +26,53 @@ document.getElementById('menu-toggle').addEventListener('click', function () {
     const navLinks = document.getElementById('nav-links');
     navLinks.classList.toggle('active');
     // Set ARIA attribute for accessibility
-    const expanded = navLinks.classList.contains('active') ? 'true' : 'false';
-    this.setAttribute('aria-expanded', expanded);
+    this.setAttribute('aria-expanded', navLinks.classList.contains('active'));
 });
 
-// Toggle light/dark theme
+// Toggle light/dark theme with smooth transition
 document.getElementById('theme-toggle').addEventListener('click', function () {
     const body = document.body;
     const navLinks = document.getElementById('nav-links');
     const isLightMode = body.classList.contains('light-mode');
 
-    if (isLightMode) {
-        body.classList.remove('light-mode');
-        body.classList.add('dark-mode');
-        navLinks.classList.remove('light-mode');
-        navLinks.classList.add('dark-mode');
-        document.querySelectorAll('nav, header, .media-viewer, #playlist-content, .nav-links a')
-            .forEach(el => el.classList.add('dark-mode'));
-    } else {
-        body.classList.remove('dark-mode');
-        body.classList.add('light-mode');
-        navLinks.classList.remove('dark-mode');
-        navLinks.classList.add('light-mode');
-        document.querySelectorAll('nav, header, .media-viewer, #playlist-content, .nav-links a')
-            .forEach(el => el.classList.remove('light-mode'));
-    }
+    body.classList.toggle('light-mode', !isLightMode);
+    body.classList.toggle('dark-mode', isLightMode);
+    navLinks.classList.toggle('light-mode', !isLightMode);
+    navLinks.classList.toggle('dark-mode', isLightMode);
+    document.querySelectorAll('nav, header, .media-viewer, #playlist-content, .nav-links a')
+        .forEach(el => {
+            el.classList.toggle('light-mode', !isLightMode);
+            el.classList.toggle('dark-mode', isLightMode);
+        });
 
     const theme = isLightMode ? 'dark' : 'light';
     localStorage.setItem('theme', theme);
 
     // Log the current theme for debugging
     console.log('Current theme set to:', theme);
-    console.log('Body class list after toggle:', body.classList);
 });
 
 // Apply theme preference on page load
 document.addEventListener('DOMContentLoaded', function () {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     const body = document.body;
+    const isLightMode = savedTheme === 'light';
 
-    if (savedTheme === 'light') {
-        body.classList.add('light-mode');
-        document.querySelectorAll('nav, header, .media-viewer, #playlist-content, .nav-links a')
-            .forEach(el => el.classList.add('light-mode'));
-    } else {
-        body.classList.add('dark-mode');
-        document.querySelectorAll('nav, header, .media-viewer, #playlist-content, .nav-links a')
-            .forEach(el => el.classList.add('dark-mode'));
-    }
+    body.classList.toggle('light-mode', isLightMode);
+    body.classList.toggle('dark-mode', !isLightMode);
+    document.querySelectorAll('nav, header, .media-viewer, #playlist-content, .nav-links a')
+        .forEach(el => {
+            el.classList.toggle('light-mode', isLightMode);
+            el.classList.toggle('dark-mode', !isLightMode);
+        });
 
     const navLinks = document.getElementById('nav-links');
-    navLinks.classList.add(savedTheme + '-mode');
+    navLinks.classList.toggle('light-mode', isLightMode);
+    navLinks.classList.toggle('dark-mode', !isLightMode);
 
     // Log the theme applied on load for debugging
     console.log('Loaded theme on page load:', savedTheme);
-    console.log('Body class list after load:', body.classList);
 });
-
-// Media content
-const mediaContent = [
-    'path/to/image1.jpg',
-    'path/to/image2.png',
-    'path/to/animation.gif'
-];
 
 // Display media content
 function displayMedia(content) {
@@ -94,7 +80,7 @@ function displayMedia(content) {
     mediaViewer.innerHTML = '';
     content.forEach(url => {
         let mediaElement;
-        if (url.endsWith('.gif') || url.endsWith('.jpg') || url.endsWith('.png')) {
+        if (/\.(gif|jpg|jpeg|tiff|png)$/i.test(url)) {
             mediaElement = document.createElement('img');
         } else {
             mediaElement = document.createElement('video');
