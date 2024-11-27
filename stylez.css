@@ -1,6 +1,7 @@
-/* General Styles */
+/* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
 
+/* Root Variables */
 :root {
     --primary-bg-color: #e3f2fd;
     /* Light Blue */
@@ -24,10 +25,17 @@
     --spacing-large: 4rem;
     --border-radius: 0.75rem;
     --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    --glow-color: rgba(100, 181, 246, 0.5);
-    /* Light Blue glow */
+    --glow-color-light: rgba(100, 181, 246, 0.5);
+    --glow-color-dark: rgba(126, 87, 194, 0.5);
+    --bubble-bg-light: #64b5f6;
+    --bubble-bg-dark: #512da8;
+    --logo-bg-gradient-light: linear-gradient(135deg, #64b5f6, #42a5f5);
+    --logo-bg-gradient-dark: linear-gradient(135deg, #7e57c2, #673ab7);
+    --logo-glow-light: rgba(100, 181, 246, 0.5);
+    --logo-glow-dark: rgba(126, 87, 194, 0.5);
 }
 
+/* General Styles */
 html {
     scroll-behavior: smooth;
 }
@@ -43,7 +51,7 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Header and Navigation Styling */
+/* Header and Navigation */
 header {
     width: 100%;
     background: linear-gradient(135deg, #6a1b9a 0%, #ab47bc 100%);
@@ -66,67 +74,66 @@ nav {
     padding: 0 var(--spacing-medium);
 }
 
-@keyframes smokeSwirl {
-    0% {
-        box-shadow: 0 0 10px #81c784, 0 0 20px #81c784, 0 0 30px #81c784, 0 0 50px #81c784;
-    }
-
-    25% {
-        box-shadow: 10px -10px 20px #66bb6a, -10px 10px 20px #66bb6a;
-    }
-
-    50% {
-        box-shadow: -10px -10px 20px #4caf50, 10px 10px 20px #4caf50;
-    }
-
-    75% {
-        box-shadow: -10px 10px 20px #388e3c, 10px -10px 20px #388e3c;
-    }
-
-    100% {
-        box-shadow: 0 0 10px #2e7d32, 0 0 20px #2e7d32, 0 0 30px #2e7d32, 0 0 50px #2e7d32;
-    }
-}
-
-@keyframes colorTransition {
-    0% {
-        color: #ab47bc;
-    }
-
-    25% {
-        color: #6a1b9a;
-    }
-
-    50% {
-        color: #7e57c2;
-    }
-
-    75% {
-        color: #512da8;
-    }
-
-    100% {
-        color: #ab47bc;
-    }
-}
-
+/* Logo Styling */
 .logo a {
     color: var(--nav-text-color);
     text-decoration: none;
     font-size: 24px;
     font-weight: bold;
-    transition: all 0.3s ease;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    text-shadow: 0 0 4px var(--logo-glow), 0 0 10px var(--logo-glow);
+    display: inline-block;
+    padding: 0.5em 1em;
+    background: var(--logo-bg-gradient);
+    /* Dynamic gradient background */
+    background-size: 200% 200%;
+    animation: gradientBackground 5s ease infinite, neonFlicker 3s infinite alternate, morphBubble 5s infinite alternate;
+    box-shadow: 0 8px 16px var(--logo-glow);
+    /* Adds a glow effect */
+    position: relative;
+    /* For positioning the ::before pseudo-element */
+    overflow: hidden;
+    /* For ripple effect */
 }
 
 .logo a:hover {
-    color: var(--nav-hover-color);
+    color: transparent;
     transform: translateY(-5px) scale(1.1);
-    background: linear-gradient(135deg, #ab47bc 0%, #6a1b9a 100%);
+    background: linear-gradient(135deg, #ab47bc, #6a1b9a);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
-    animation: smokeSwirl 2s infinite alternate, colorTransition 3s infinite;
+    box-shadow: 0 12px 24px var(--logo-glow);
+    /* Enhances the glow on hover */
+}
+
+.logo a::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: inherit;
+    border: 2px solid var(--logo-glow);
+    opacity: 0;
+    animation: bubbleBorder 1s ease-in-out infinite alternate;
+}
+
+.logo a::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.5);
+    display: block;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: scale(0);
+    opacity: 0;
+}
+
+.logo a:hover::after {
+    animation: ripple 1s ease-out infinite, particleMove 2s infinite;
 }
 
 /* Navigation Links */
@@ -143,57 +150,25 @@ nav {
 }
 
 .nav-links li:last-child {
-    margin-right: 20px; 
+    margin-right: 20px;
 }
 
-/* Light Theme Navigation Links */
-body.light-mode .nav-links a {
+.nav-links a {
     color: var(--nav-text-color);
     text-decoration: none;
     padding: var(--spacing-small) var(--spacing-medium);
     position: relative;
     transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
     border-radius: var(--border-radius);
-    background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
-    /* Light Blue gradient */
-    box-shadow: var(--box-shadow);
     font-size: 18px;
-}
-
-body.light-mode .nav-links a:hover,
-body.light-mode .nav-links a:focus {
-    color: var(--primary-text-color);
-    /* Dark Blue */
-    background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
-    /* Brighter Blue */
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 16px var(--glow-color);
-    /* Adjusted glow */
-}
-
-body.light-mode .nav-links .active {
-    border-bottom: 2px solid var(--nav-hover-color);
-    /* Light Blue */
-}
-
-/* Dark Theme Navigation Links */
-body.dark-mode .nav-links a {
-    color: var(--nav-text-color);
-    text-decoration: none;
-    padding: var(--spacing-small) var(--spacing-medium);
-    position: relative;
-    transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
-    border-radius: var(--border-radius);
     background: linear-gradient(135deg, #7e57c2 0%, #673ab7 100%);
     /* Dark Purple gradient */
     box-shadow: var(--box-shadow);
-    font-size: 18px;
 }
 
-body.dark-mode .nav-links a:hover,
-body.dark-mode .nav-links a:focus {
+.nav-links a:hover,
+.nav-links a:focus {
     color: var(--primary-text-color);
-    /* Light Text */
     background: linear-gradient(135deg, #673ab7 0%, #5e35b1 100%);
     /* Brighter Gradient */
     transform: translateY(-3px) scale(1.05);
@@ -201,7 +176,7 @@ body.dark-mode .nav-links a:focus {
     /* Adjusted glow */
 }
 
-body.dark-mode .nav-links .active {
+.nav-links .active {
     border-bottom: 2px solid var(--nav-hover-color);
     /* Light Purple */
 }
@@ -235,6 +210,7 @@ body.dark-mode .nav-links .active {
     }
 }
 
+/* Button Styling */
 button {
     background-color: var(--button-bg-color);
     border: none;
@@ -342,8 +318,10 @@ body.light-mode {
     /* Light Blue for hover */
     --header-bg-gradient: linear-gradient(135deg, #3949ab, #64b5f6);
     /* Gradient for header */
-    --glow-color: rgba(100, 181, 246, 0.5);
-    /* Adjusted glow color to match theme */
+    --bubble-bg-color: var(--bubble-bg-light);
+    --glow-color: var(--glow-color-light);
+    --logo-bg-gradient: var(--logo-bg-gradient-light);
+    --logo-glow: var(--logo-glow-light);
 }
 
 /* Apply header gradient */
@@ -401,8 +379,10 @@ body.dark-mode {
     /* Light Purple */
     --header-bg-gradient: linear-gradient(135deg, #1a237e, #7e57c2);
     /* Gradient for header */
-    --glow-color: rgba(126, 87, 194, 0.5);
-    /* Adjusted glow color to match theme */
+    --bubble-bg-color: var(--bubble-bg-dark);
+    --glow-color: var(--glow-color-dark);
+    --logo-bg-gradient: var(--logo-bg-gradient-dark);
+    --logo-glow: var(--logo-glow-dark);
 }
 
 /* Apply header gradient */
@@ -491,13 +471,12 @@ button.dark-mode:hover {
     }
 }
 
-/* Ensuring the main-container has no unnecessary padding or margins */
+/* Main Content Styles */
 .main-container {
     padding: 0;
     margin: 0;
 }
 
-/* Adjusting flex properties in main */
 main {
     display: flex;
     flex-direction: column;
@@ -505,7 +484,6 @@ main {
     width: 100%;
 }
 
-/* Ensuring media-container and media-viewer widths are consistent */
 .media-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -747,5 +725,130 @@ main {
     * {
         animation: none;
         transition: none;
+    }
+}
+
+/* Keyframes for smoke swirl animation */
+@keyframes smokeSwirl {
+    0% {
+        box-shadow: 0 0 10px var(--logo-glow), 0 0 20px var(--logo-glow), 0 0 30px var(--logo-glow), 0 0 50px var(--logo-glow);
+    }
+
+    25% {
+        box-shadow: 10px -10px 20px var(--logo-glow), -10px 10px 20px var(--logo-glow);
+    }
+
+    50% {
+        box-shadow: -10px -10px 20px var(--logo-glow), 10px 10px 20px var(--logo-glow);
+    }
+
+    75% {
+        box-shadow: -10px 10px 20px var(--logo-glow), 10px -10px 20px var(--logo-glow);
+    }
+
+    100% {
+        box-shadow: 0 0 10px var(--logo-glow), 0 0 20px var(--logo-glow), 0 0 30px var(--logo-glow), 0 0 50px var(--logo-glow);
+    }
+}
+
+/* Keyframes for color transition animation */
+@keyframes colorTransition {
+    0%, 100% {
+        color: var(--nav-text-color);
+    }
+
+    25% {
+        color: #6a1b9a;
+    }
+
+    50% {
+        color: #7e57c2;
+    }
+
+    75% {
+        color: #512da8;
+    }
+}
+
+/* Keyframes for gradient background animation */
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Keyframes for ripple effect */
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Keyframes for border pulsation */
+@keyframes bubbleBorder {
+    0% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Keyframes for particle effect */
+@keyframes particleMove {
+    0% {
+        opacity: 0.5;
+        transform: translateY(0) translateX(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-20px) translateX(20px);
+    }
+
+    100% {
+        opacity: 0.5;
+        transform: translateY(0) translateX(0);
+    }
+}
+
+/* Keyframes for neon glow flicker */
+@keyframes neonFlicker {
+    0%, 22%, 36%, 75% {
+        text-shadow: 0 0 4px var(--logo-glow), 0 0 10px var(--logo-glow), 0 0 20px var(--logo-glow), 0 0 30px var(--logo-glow);
+        opacity: 1;
+    }
+
+    28%, 33%, 82%, 97% {
+        text-shadow: none;
+        opacity: 0.8;
+    }
+}
+
+/* Keyframes for morphing shapes */
+@keyframes morphBubble {
+    0%, 100% {
+        border-radius: 25px;
+        /* Original bubble shape */
+    }
+
+    50% {
+        border-radius: 50px;
+        /* Morph into a more circular shape */
     }
 }
