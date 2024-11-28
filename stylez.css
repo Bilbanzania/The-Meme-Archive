@@ -36,10 +36,6 @@
 }
 
 /* General Styles */
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     display: flex;
     flex-direction: column;
@@ -58,7 +54,6 @@ header {
     padding: var(--spacing-small) 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: sticky;
-    /* Make the header sticky */
     top: 0;
     left: 0;
     z-index: 1000;
@@ -85,15 +80,11 @@ nav {
     display: inline-block;
     padding: 0.5em 1em;
     background: var(--logo-bg-gradient);
-    /* Dynamic gradient background */
     background-size: 200% 200%;
     animation: gradientBackground 5s ease infinite, neonFlicker 3s infinite alternate, morphBubble 5s infinite alternate;
     box-shadow: 0 8px 16px var(--logo-glow);
-    /* Adds a glow effect */
     position: relative;
-    /* For positioning the ::before pseudo-element */
     overflow: hidden;
-    /* For ripple effect */
 }
 
 .logo a:hover {
@@ -103,7 +94,6 @@ nav {
     -webkit-background-clip: text;
     background-clip: text;
     box-shadow: 0 12px 24px var(--logo-glow);
-    /* Enhances the glow on hover */
 }
 
 .logo a::before {
@@ -162,23 +152,39 @@ nav {
     border-radius: var(--border-radius);
     font-size: 18px;
     background: linear-gradient(135deg, #7e57c2 0%, #673ab7 100%);
-    /* Dark Purple gradient */
     box-shadow: var(--box-shadow);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    /* Adds space between the icon and text */
 }
 
-.nav-links a:hover,
-.nav-links a:focus {
+.nav-links a i {
+    margin-right: 8px;
+    /* Ensures space between the icon and the text */
+}
+
+/* Light Mode */
+body.light-mode .nav-links a {
+    color: var(--nav-text-color);
+}
+
+body.light-mode .nav-links a:hover,
+body.light-mode .nav-links a:focus {
+    color: var(--nav-hover-color);
+}
+
+/* Dark Mode */
+body.dark-mode .nav-links a {
+    color: var(--nav-text-color);
+}
+
+body.dark-mode .nav-links a:hover,
+body.dark-mode .nav-links a:focus {
     color: var(--primary-text-color);
     background: linear-gradient(135deg, #673ab7 0%, #5e35b1 100%);
-    /* Brighter Gradient */
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 8px 16px var(--glow-color);
-    /* Adjusted glow */
-}
-
-.nav-links .active {
-    border-bottom: 2px solid var(--nav-hover-color);
-    /* Light Purple */
 }
 
 /* Menu Toggle */
@@ -260,16 +266,6 @@ button:focus {
     outline-offset: 2px;
 }
 
-@keyframes button-fade {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
 .toggle-theme-button {
     animation: button-fade 0.5s ease-in-out;
 }
@@ -324,7 +320,6 @@ body.light-mode {
     --logo-glow: var(--logo-glow-light);
 }
 
-/* Apply header gradient */
 header.light-mode {
     background: var(--header-bg-gradient);
 }
@@ -349,20 +344,13 @@ body.light-mode button:hover {
     /* Brighter Blue on Hover */
 }
 
-.header.light-mode, .nav.light-mode, .nav-links.light-mode a {
-    background-color: var(--nav-bg-color);
+body.light-mode .nav-links a {
     color: var(--nav-text-color);
 }
 
-.nav-links.light-mode a:hover {
+body.light-mode .nav-links a:hover,
+body.light-mode .nav-links a:focus {
     color: var(--nav-hover-color);
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 6px 12px var(--glow-color);
-}
-
-.nav-links.light-mode a:hover::after {
-    background-color: var(--nav-hover-color);
-    width: 100%;
 }
 
 /* Dark Theme */
@@ -385,7 +373,6 @@ body.dark-mode {
     --logo-glow: var(--logo-glow-dark);
 }
 
-/* Apply header gradient */
 header.dark-mode {
     background: var(--header-bg-gradient);
 }
@@ -407,16 +394,14 @@ button.dark-mode:hover {
     /* Darker Purple */
 }
 
-.header.dark-mode, .nav.dark-mode, .nav-links.dark-mode a {
-    background-color: var(--nav-bg-color);
+body.dark-mode .nav-links a {
     color: var(--nav-text-color);
 }
 
-.nav-links.dark-mode a:hover,
-.nav-links.dark-mode a:focus {
+body.dark-mode .nav-links a:hover,
+body.dark-mode .nav-links a:focus {
     color: var(--primary-text-color);
     background: linear-gradient(135deg, #673ab7 0%, #5e35b1 100%);
-    /* Brighter Gradient */
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 8px 16px var(--glow-color);
 }
@@ -605,23 +590,6 @@ main {
     }
 }
 
-/* Ensure the icons are visible and positioned correctly for larger screens */
-@media (min-width: 768px) {
-    .nav-links li {
-        display: flex;
-        align-items: center;
-    }
-
-    .nav-links li a {
-        display: flex;
-        align-items: center;
-    }
-
-    .nav-links li a i {
-        margin-right: 8px;
-    }
-}
-
 @media (max-width: 768px) {
     .menu-toggle {
         display: flex;
@@ -747,7 +715,7 @@ main {
     }
 
     100% {
-        box-shadow: 0 0 10px var(--logo-glow), 0 0 20px var(--logo-glow), 0 0 30px var(--logo-glow), 0 0 50px var(--logo-glow);
+        box-shadow: 0 0 10px var(--logo-glow), 0 0 20px var(--logo-glow), 0 0 30px var (--logo-glow), 0 0 50px var(--logo-glow);
     }
 }
 
@@ -844,11 +812,9 @@ main {
 @keyframes morphBubble {
     0%, 100% {
         border-radius: 25px;
-        /* Original bubble shape */
     }
 
     50% {
         border-radius: 50px;
-        /* Morph into a more circular shape */
     }
 }

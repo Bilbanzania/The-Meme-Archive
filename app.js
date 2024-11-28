@@ -14,53 +14,63 @@ function debounce(func, wait, immediate) {
     };
 }
 
-// Toggle playlist visibility
-document.getElementById('toggle-playlist').addEventListener('click', function () {
-    const playlistContent = document.getElementById('playlist-content');
-    playlistContent.classList.toggle('hidden');
-    this.textContent = playlistContent.classList.contains('hidden') ? 'View Playlist' : 'Hide Playlist';
-});
-
-// Toggle navigation menu
-document.getElementById('menu-toggle').addEventListener('click', function () {
-    const navLinks = document.getElementById('nav-links');
-    navLinks.classList.toggle('active');
-    // Set ARIA attribute for accessibility
-    this.setAttribute('aria-expanded', navLinks.classList.contains('active'));
-});
-
-// Toggle light/dark theme with smooth transition
-document.getElementById('theme-toggle').addEventListener('click', function () {
-    const body = document.body;
-    const navLinks = document.getElementById('nav-links');
-    const isLightMode = body.classList.contains('light-mode');
-
-    body.classList.toggle('light-mode', !isLightMode);
-    body.classList.toggle('dark-mode', isLightMode);
-    navLinks.classList.toggle('light-mode', !isLightMode);
-    navLinks.classList.toggle('dark-mode', isLightMode);
-    document.querySelectorAll('nav, header, .media-viewer, #playlist-content, .nav-links a')
-        .forEach(el => {
-            el.classList.toggle('light-mode', !isLightMode);
-            el.classList.toggle('dark-mode', isLightMode);
-        });
-
-    const theme = isLightMode ? 'dark' : 'light';
-    localStorage.setItem('theme', theme);
-
-    // Log the current theme for debugging
-    console.log('Current theme set to:', theme);
-});
-
-// Apply theme preference on page load
+// Apply event listeners after DOM content is loaded
 document.addEventListener('DOMContentLoaded', function () {
+    // Toggle playlist visibility
+    const togglePlaylistBtn = document.getElementById('toggle-playlist');
+    if (togglePlaylistBtn) {
+        togglePlaylistBtn.addEventListener('click', function () {
+            const playlistContent = document.getElementById('playlist-content');
+            playlistContent.classList.toggle('hidden');
+            this.textContent = playlistContent.classList.contains('hidden') ? 'View Playlist' : 'Hide Playlist';
+        });
+    }
+
+    // Toggle navigation menu
+    const menuToggleBtn = document.getElementById('menu-toggle');
+    if (menuToggleBtn) {
+        menuToggleBtn.addEventListener('click', function () {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('active');
+            // Set ARIA attribute for accessibility
+            this.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+        });
+    }
+
+    // Toggle light/dark theme with smooth transition
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function () {
+            const body = document.body;
+            const isLightMode = body.classList.contains('light-mode');
+
+            body.classList.toggle('light-mode', !isLightMode);
+            body.classList.toggle('dark-mode', isLightMode);
+            updateThemeClasses(!isLightMode);
+
+            const theme = isLightMode ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+
+            // Log the current theme for debugging
+            console.log('Current theme set to:', theme);
+        });
+    }
+
+    // Apply theme preference on page load
     const savedTheme = localStorage.getItem('theme') || 'dark';
-    const body = document.body;
     const isLightMode = savedTheme === 'light';
 
-    body.classList.toggle('light-mode', isLightMode);
-    body.classList.toggle('dark-mode', !isLightMode);
-    document.querySelectorAll('nav, header, .media-viewer, #playlist-content, .nav-links a')
+    document.body.classList.toggle('light-mode', isLightMode);
+    document.body.classList.toggle('dark-mode', !isLightMode);
+    updateThemeClasses(isLightMode);
+
+    // Log the theme applied on load for debugging
+    console.log('Loaded theme on page load:', savedTheme);
+});
+
+// Function to update theme classes
+function updateThemeClasses(isLightMode) {
+    document.querySelectorAll('nav, header, .media-viewer, #playlist-content, .nav-links a, .logo a')
         .forEach(el => {
             el.classList.toggle('light-mode', isLightMode);
             el.classList.toggle('dark-mode', !isLightMode);
@@ -69,10 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const navLinks = document.getElementById('nav-links');
     navLinks.classList.toggle('light-mode', isLightMode);
     navLinks.classList.toggle('dark-mode', !isLightMode);
-
-    // Log the theme applied on load for debugging
-    console.log('Loaded theme on page load:', savedTheme);
-});
+}
 
 // Display media content
 function displayMedia(content) {
@@ -80,18 +87,20 @@ function displayMedia(content) {
     mediaViewer.innerHTML = '';
     content.forEach(url => {
         let mediaElement;
-        if (/\.(gif|jpg|jpeg|tiff|png)$/i.test(url)) {
+        if (/\.(gif|jpg|jpeg|png)$/i.test(url)) {
             mediaElement = document.createElement('img');
         } else {
-            mediaElement = document.createElement('video');
-            mediaElement.controls = true;
+            console.log('Unsupported media format:', url);
+            return; // Skip unsupported formats
         }
-        mediaElement.src = url;
+        mediaElement.src = 'media/' + url; // Update this path according to your directory structure
         mediaElement.alt = 'Media content';
         mediaViewer.appendChild(mediaElement);
     });
 }
 
+// Example usage of displayMedia function with correct paths
+const mediaContent = ['1.jpg', '2.png', '3.gif']; // Replace with your actual media filenames
 displayMedia(mediaContent);
 
 // Smooth scroll for anchor links
