@@ -226,7 +226,7 @@ button:focus {
     background: linear-gradient(135deg, #ab47bc 0%, #7b1fa2 100%);
     border: none;
     color: white;
-    padding: 8px 16px; /* Use fixed padding values instead of variables */
+    padding: 8px 16px;
     cursor: pointer;
     border-radius: var(--border-radius);
     font-family: 'Cinzel', sans-serif;
@@ -234,8 +234,8 @@ button:focus {
     font-size: 16px;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     box-shadow: var(--box-shadow);
-    width: 40px; /* Add a fixed width to the button */
-    height: 40px; /* Add a fixed height to the button */
+    width: 40px; 
+    height: 40px; 
     display: flex;
     justify-content: center;
     align-items: center;
