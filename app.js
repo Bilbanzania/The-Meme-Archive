@@ -77,24 +77,6 @@ function updateThemeClasses(isLightMode) {
         });
 }
 
-// Display media content
-function displayMedia(content) {
-    const mediaViewer = document.querySelector('.media-viewer');
-    mediaViewer.innerHTML = '';
-    content.forEach(url => {
-        let mediaElement;
-        if (/\.(gif|jpg|jpeg|png)$/i.test(url)) {
-            mediaElement = document.createElement('img');
-        } else {
-            console.log('Unsupported media format:', url);
-            return; // Skip unsupported formats
-        }
-        mediaElement.src = 'media/' + url; // Update this path according to your directory structure
-        mediaElement.alt = 'Media content';
-        mediaViewer.appendChild(mediaElement);
-    });
-}
-
 // Example usage of displayMedia function with correct paths
 const mediaContent = ['1.jpg', '2.png', '3.gif']; // Replace with your actual media filenames
 displayMedia(mediaContent);
@@ -117,3 +99,5 @@ window.addEventListener('resize', debounce(function () {
         document.getElementById('menu-toggle').setAttribute('aria-expanded', 'false');
     }
 }, 250));
+
+displayMedia();

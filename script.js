@@ -1,28 +1,28 @@
-const form = document.getElementById('upload-form');
-const fileInput = document.getElementById('file-input');
+const form = document.getElementById('image-upload-form');
 
-form.addEventListener('submit', async (event) => {
-    event.preventDefault();
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    const file = fileInput.files[0];
-    const fileName = file.name;
-    const fileType = file.type;
+  const fileInput = document.getElementById('image-input');
+  const file = fileInput.files[0];
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('fileName', fileName);
-    formData.append('fileType', fileType);
+  const formData = new FormData();
+  formData.append('image', file);
 
+  try {
     const response = await fetch('/upload', {
-        method: 'POST',
-        body: formData,
+      method: 'POST',
+      body: formData,
     });
 
     const data = await response.json();
 
     if (data.message === 'File uploaded successfully') {
-        console.log('File uploaded successfully!');
+      console.log('File uploaded successfully!');
     } else {
-        console.error('Error uploading file:', data.error);
+      console.error('Error uploading file:', data.message);
     }
+  } catch (error) {
+    console.error('Error uploading file:', error);
+  }
 });

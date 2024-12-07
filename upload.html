@@ -32,7 +32,7 @@
     <div class="main-container">
         <main>
             <form id="image-upload-form" enctype="multipart/form-data">
-                <input type="file" name="image" accept="image/*">
+                <input type="file" id="image-input" name="image" accept="image/*">
                 <button type="submit">Upload Meme</button>
             </form>
         </main>
@@ -47,8 +47,10 @@
             </ul>
         </div>
     </footer>
+    <script src="index.js"></script>
     <script src="script.js"></script>
     <script src="app.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.2.3/dist/supabase.min.js"></script>
 </body>
 
 </html>
