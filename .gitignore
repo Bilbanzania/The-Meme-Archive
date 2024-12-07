@@ -1,6 +1,5 @@
 
 node_modules/@supabase/auth-js/dist/main/AuthAdminApi.js
-index.js
 node_modules/.bin/mime
 node_modules/.bin/mime.cmd
 node_modules/.bin/mime.ps1

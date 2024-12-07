@@ -16,13 +16,8 @@ form.addEventListener('submit', async (e) => {
     });
 
     const data = await response.json();
-
-    if (data.message === 'File uploaded successfully') {
-      console.log('File uploaded successfully!');
-    } else {
-      console.error('Error uploading file:', data.message);
-    }
+    console.log(data);
   } catch (error) {
-    console.error('Error uploading file:', error);
+    console.error(error);
   }
 });
