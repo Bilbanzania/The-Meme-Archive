@@ -30,10 +30,53 @@
         </nav>
     </header>
     <div class="main-container">
-        <main>
-
-        </main>
+        <form id="contact-form">
+            <fieldset>
+                <legend>Contact Information</legend>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" class="form-control">
+                </div>
+            </fieldset>
+            <fieldset id="contact-method">
+                <legend>Choose your preferred contact method:</legend>
+                <div class="form-group">
+                    <input type="radio" id="phone" name="contact-method" checked>
+                    <label for="phone" class="choice">Phone</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" id="email" name="contact-method">
+                    <label for="email" class="choice">Email</label>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Message</legend>
+                <div class="form-group">
+                    <textarea id="message" name="message" class="form-control"></textarea>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 The Meme Archive. All rights reserved.</p>
+            <ul>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script src="contact.js"></script>
     <script src="app.js" defer></script>
 </body>
 

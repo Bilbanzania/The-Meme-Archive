@@ -70,15 +70,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Function to update theme classes
 function updateThemeClasses(isLightMode) {
-    document.querySelectorAll('nav, header, .media-viewer, #playlist-content, .nav-links a, .logo a')
+    document.querySelectorAll('nav, header, .nav-links, .media-viewer, #playlist-content, .nav-links a, .logo a, #image-upload-form, #image-upload-form input[type="file"], #image-upload-form button[type="submit"]')
         .forEach(el => {
             el.classList.toggle('light-mode', isLightMode);
             el.classList.toggle('dark-mode', !isLightMode);
         });
-
-    const navLinks = document.getElementById('nav-links');
-    navLinks.classList.toggle('light-mode', isLightMode);
-    navLinks.classList.toggle('dark-mode', !isLightMode);
 }
 
 // Display media content
