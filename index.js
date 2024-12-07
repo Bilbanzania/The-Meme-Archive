@@ -159,3 +159,4 @@ async function init() {
 }
 
 init();
+export { displayMedia };

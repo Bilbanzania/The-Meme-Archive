@@ -1,3 +1,7 @@
+import { displayMedia } from './index.js';
+const express = require('express');
+const app = require('./index.js');
+
 // Debounce function with leading option
 function debounce(func, wait, immediate) {
     let timeout;
