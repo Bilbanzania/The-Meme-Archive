@@ -68,29 +68,21 @@ nav {
 .logo a {
     color: var(--nav-text-color);
     text-decoration: none;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: bold;
-    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-    text-shadow: 0 0 4px var(--logo-glow), 0 0 10px var(--logo-glow);
+    text-shadow: 0 0 8px var(--logo-glow), 0 0 16px var(--logo-glow);
     display: inline-block;
     padding: 0.2em 0.5em;
-    background: var(--logo-bg-gradient);
-    background-size: 200% 200%;
-    animation: gradientBackground 5s ease infinite, neonFlicker 3s infinite alternate, morphBubble 5s infinite alternate;
-    box-shadow: 0 8px 16px var(--logo-glow);
     position: relative;
-    overflow: hidden;
     margin-right: var(--spacing-medium);
+    transition: transform 0.3s ease;
+    animation: neonFlicker 2s linear infinite;
 }
 
 .logo a:hover {
-    color: transparent;
-    transform: translateY(-5px) scale(1.1);
-    background: linear-gradient(135deg, #ab47bc, #6a1b9a);
-    -webkit-background-clip: text;
-    background-clip: text;
-    box-shadow: 0 12px 24px var(--logo-glow);
+    transform: translateY(-3px) scale(1.05);
 }
+
 
 .logo a::before {
     content: '';
@@ -102,24 +94,24 @@ nav {
     border-radius: inherit;
     border: 2px solid var(--logo-glow);
     opacity: 0;
-    animation: bubbleBorder 1s ease-in-out infinite alternate;
 }
 
 .logo a::after {
     content: '';
     position: absolute;
-    width: 100px;
-    height: 100px;
-    background: rgba(255, 255, 255, 0.5);
-    display: block;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: var(--logo-glow);
     border-radius: 50%;
-    pointer-events: none;
-    transform: scale(0);
     opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .logo a:hover::after {
-    animation: ripple 1s ease-out infinite, particleMove 2s infinite;
+    animation: particleMove 3s linear infinite;
 }
 
 /* Navigation Links */
@@ -234,8 +226,8 @@ button:focus {
     font-size: 16px;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     box-shadow: var(--box-shadow);
-    width: 40px; 
-    height: 40px; 
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -957,131 +949,48 @@ main {
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-    * {
+    .logo a {
         animation: none;
-        transition: none;
-    }
-}
-
-/* Keyframes for smoke swirl animation */
-@keyframes smokeSwirl {
-    0% {
-        box-shadow: 0 0 10px var(--logo-glow), 0 0 20px var(--logo-glow), 0 0 30px var(--logo-glow), 0 0 50px var(--logo-glow);
+        text-shadow: 0 0 8px var(--logo-glow);
     }
 
-    25% {
-        box-shadow: 10px -10px 20px var(--logo-glow), -10px 10px 20px var(--logo-glow);
+    .logo a:hover {
+        transform: none;
     }
 
-    50% {
-        box-shadow: -10px -10px 20px var(--logo-glow), 10px 10px 20px var(--logo-glow);
-    }
-
-    75% {
-        box-shadow: -10px 10px 20px var(--logo-glow), 10px -10px 20px var(--logo-glow);
-    }
-
-    100% {
-        box-shadow: 0 0 10px var(--logo-glow), 0 0 20px var(--logo-glow), 0 0 30px var (--logo-glow), 0 0 50px var(--logo-glow);
-    }
-}
-
-/* Keyframes for color transition animation */
-@keyframes colorTransition {
-    0%, 100% {
-        color: var(--nav-text-color);
-    }
-
-    25% {
-        color: #6a1b9a;
-    }
-
-    50% {
-        color: #7e57c2;
-    }
-
-    75% {
-        color: #512da8;
-    }
-}
-
-/* Keyframes for gradient background animation */
-@keyframes gradientBackground {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* Keyframes for ripple effect */
-@keyframes ripple {
-    0% {
-        transform: scale(0);
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(4);
-        opacity: 0;
-    }
-}
-
-/* Keyframes for border pulsation */
-@keyframes bubbleBorder {
-    0% {
-        opacity: 0.3;
-    }
-
-    100% {
-        opacity: 1;
+    .logo a:hover::after {
+        animation: none;
+        content: none;
     }
 }
 
 /* Keyframes for particle effect */
 @keyframes particleMove {
     0% {
-        opacity: 0.5;
-        transform: translateY(0) translateX(0);
+        opacity: 0;
+        transform: translate(0, 0) scale(1);
     }
 
     50% {
-        opacity: 1;
-        transform: translateY(-20px) translateX(20px);
+        opacity: 0.5;
+        transform: translate(-10px, -20px) scale(1.2);
     }
 
     100% {
-        opacity: 0.5;
-        transform: translateY(0) translateX(0);
+        opacity: 0;
+        transform: translate(-20px, -40px) scale(1.4);
     }
 }
 
 /* Keyframes for neon glow flicker */
 @keyframes neonFlicker {
-    0%, 22%, 36%, 75% {
-        text-shadow: 0 0 4px var(--logo-glow), 0 0 10px var(--logo-glow), 0 0 20px var(--logo-glow), 0 0 30px var(--logo-glow);
+    0%, 100% {
+        text-shadow: 0 0 8px var(--logo-glow), 0 0 16px var(--logo-glow);
         opacity: 1;
     }
 
-    28%, 33%, 82%, 97% {
-        text-shadow: none;
-        opacity: 0.8;
-    }
-}
-
-/* Keyframes for morphing shapes */
-@keyframes morphBubble {
-    0%, 100% {
-        border-radius: 25px;
-    }
-
     50% {
-        border-radius: 50px;
+        text-shadow: 0 0 4px var(--logo-glow), 0 0 8px var(--logo-glow);
+        opacity: 0.9;
     }
 }

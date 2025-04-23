@@ -1,4 +1,11 @@
 // Debounce function with leading option
+/**
+ * Debounces a function by the specified delay.
+ * @param {function} func The function to debounce.
+ * @param {number} wait The delay in milliseconds.
+ * @param {boolean} immediate Whether to call the function immediately.
+ * @returns {function} The debounced function.
+ */
 function debounce(func, wait, immediate) {
     let timeout;
     return function () {
@@ -13,6 +20,25 @@ function debounce(func, wait, immediate) {
         if (callNow) func.apply(context, args);
     };
 }
+
+// Animation adjustments
+// Get the animation element
+const animationElement = document.getElementById('animation-element');
+
+// Define a function to update the animation styles and timing
+function updateAnimationStyles() {
+    const randomProperties = getRandomAnimationProperties();
+    animationElement.classList.add('animated');
+    animationElement.classList.toggle('light-mode', isLightMode);
+    animationElement.classList.toggle('dark-mode', !isLightMode);
+    animationElement.style.transform = `scale(${randomProperties.scale}) rotate(${randomProperties.rotation}deg)`;
+    animationElement.style.opacity = randomProperties.opacity;
+    animationElement.style.animationDuration = `${Math.random() * 20 + 5}s`;
+    animationElement.style.animationDelay = `${Math.random() * 2}s`;
+}
+
+// Call the updateAnimationStyles function when the page loads
+document.addEventListener('DOMContentLoaded', updateAnimationStyles);
 
 // Apply event listeners after DOM content is loaded
 document.addEventListener('DOMContentLoaded', function () {
@@ -53,6 +79,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Log the current theme for debugging
             console.log('Current theme set to:', theme);
+
+            // Update the animation element's classes
+            const animationElement = document.getElementById('animation-element');
+            animationElement.classList.toggle('light-mode', !isLightMode);
+            animationElement.classList.toggle('dark-mode', isLightMode);
         });
     }
 
@@ -100,4 +131,4 @@ window.addEventListener('resize', debounce(function () {
     }
 }, 250));
 
-displayMedia();
+import { displayMedia } from 'index.js';

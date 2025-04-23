@@ -57,7 +57,7 @@ app.listen(9001, () => {
 });
 
 // Display media content
-async function displayMedia() {
+export async function displayMedia() {
   const { data, error } = await supabase.storage
     .from('memes')
     .list('');
@@ -159,4 +159,3 @@ async function init() {
 }
 
 init();
-export { displayMedia };
