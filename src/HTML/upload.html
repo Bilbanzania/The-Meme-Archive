@@ -31,28 +31,10 @@
     </header>
     <div class="main-container">
         <main>
-            <section class="welcome-section">
-                <h1>About</h1>
-                <p>Welcome to The Meme Archive, a website dedicated to storing and sharing memes. This site is a labor
-                    of love, created for fun and as a way to showcase my skills as a full stack web developer.</p>
-            </section>
-            <section class="about-content">
-                <h2>A Senior Project</h2>
-                <p>This website is also serving as my senior project for my Bachelor's degree in Full Stack Web
-                    Development. I'm excited to demonstrate my knowledge and skills in designing and building a
-                    functional web application.</p>
-                <h2>Just for Fun</h2>
-                <p>While this site is a serious project for my education, it's also a way for me to have fun and express
-                    my creativity. I love memes, and I'm excited to share them with the world. I hope you enjoy browsing
-                    through the site and finding some laughs along the way.</p>
-                <h2>What to Expect</h2>
-                <p>On this site, you can expect to find a collection of memes, as well as some fun features and tools
-                    for interacting with them. I'll be continually updating and improving the site, so be sure to check
-                    back often for new content and features.</p>
-                <h2>Thanks for Visiting!</h2>
-                <p>Thanks for taking the time to visit The Meme Archive. I hope you have a great time exploring the
-                    site, and I look forward to hearing your feedback and suggestions.</p>
-            </section>
+            <form id="image-upload-form" enctype="multipart/form-data">
+                <input type="file" id="image-input" name="image" accept="image/*">
+                <button type="submit">Upload Meme</button>
+            </form>
         </main>
     </div>
     <footer class="footer">
@@ -65,7 +47,10 @@
             </ul>
         </div>
     </footer>
+    <script src="index.js"></script>
+    <script src="script.js"></script>
     <script src="app.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </body>
 
 </html>

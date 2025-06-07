@@ -1,3 +1,5 @@
+import { supabase } from './supabaseClient.js';
+
 const form = document.getElementById('contact-form');
 const emailInput = document.getElementById('email');
 const messageInput = document.getElementById('message');

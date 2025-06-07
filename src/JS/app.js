@@ -1,11 +1,6 @@
+import { supabase } from './supabaseClient.js';
+
 // Debounce function with leading option
-/**
- * Debounces a function by the specified delay.
- * @param {function} func The function to debounce.
- * @param {number} wait The delay in milliseconds.
- * @param {boolean} immediate Whether to call the function immediately.
- * @returns {function} The debounced function.
- */
 function debounce(func, wait, immediate) {
     let timeout;
     return function () {

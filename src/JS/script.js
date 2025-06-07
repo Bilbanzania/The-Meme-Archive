@@ -1,3 +1,5 @@
+import { supabase } from './supabaseClient.js';
+
 const form = document.getElementById('image-upload-form');
 
 form.addEventListener('submit', async (e) => {
